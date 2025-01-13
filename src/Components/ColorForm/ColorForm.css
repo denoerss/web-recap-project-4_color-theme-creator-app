@@ -4,7 +4,7 @@
   flex-direction: column;
 }
 
-.input-fields {
+.form__input {
   border: none;
   padding: 0;
 }

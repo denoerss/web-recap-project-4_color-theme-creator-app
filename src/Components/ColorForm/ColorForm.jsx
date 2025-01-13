@@ -3,23 +3,28 @@ import "./ColorForm.css";
 import { useState } from "react";
 import { uid } from "uid";
 
-export default function ColorForm({ onAddColor }) {
-  const [color, setColor] = useState({
+import ColorInput from "../ColorInput/ColorInput.jsx";
+
+export default function ColorForm({
+  onAddColor,
+  defaultValue = {
     role: "some color",
     hex: "#123456",
-    contrastText: "#ffffff",
-  });
+    contrastText: "#FFFFFF",
+  },
+}) {
+  const [color, setColor] = useState(defaultValue);
 
   function handleChange(event) {
     const { id, value } = event.target;
-    setColor(() => ({ ...color, [id]: value }));
+    setColor((prev) => ({ ...prev, [id]: value }));
   }
 
   function handleSubmit(event) {
     event.preventDefault();
-    const newColor = { id: uid(), ...color }; // generate unique ID for new color
-    onAddColor(newColor); // pass new color to parent component
-    setColor({ role: "some color", hex: "#123456", contrastText: "#ffffff" }); // reset form
+    const newColor = { id: uid(), ...color };
+    onAddColor(newColor);
+    setColor(defaultValue);
   }
 
   return (
@@ -30,52 +35,30 @@ export default function ColorForm({ onAddColor }) {
     >
       <fieldset className="add-color">
         <label htmlFor="role">Role</label>
-        <fieldset className="input-fields">
+        <div className="color-form__input">
           <input
             type="text"
             id="role"
             value={color.role}
             onChange={handleChange}
           />
-        </fieldset>
+        </div>
 
         <label htmlFor="hex">Hex</label>
-        <fieldset className="input-fields">
-          <input
-            type="text"
-            id="hex"
-            value={color.hex}
-            onChange={handleChange}
-          />
-          <input
-            type="color"
-            id="hex"
-            value={color.hex}
-            onChange={handleChange}
-          />
-        </fieldset>
+        <ColorInput id="hex" defaultValue={color.hex} onChange={handleChange} />
 
         <label htmlFor="contrast-text">Contrast Text</label>
-        <fieldset className="input-fields">
-          <input
-            type="text"
-            id="contrastText"
-            value={color.contrastText}
-            onChange={handleChange}
-          />
-          <input
-            type="color"
-            id="contrastText"
-            value={color.contrastText}
-            onChange={handleChange}
-          />
-        </fieldset>
+        <ColorInput
+          id="contrastText"
+          defaultValue={color.contrastText}
+          onChange={handleChange}
+        />
 
-        <fieldset className="input-fields">
+        <div className="color-form__input">
           <button type="submit" aria-label="Add Color">
-            ADD COLOR
+            Add Color
           </button>
-        </fieldset>
+        </div>
       </fieldset>
     </form>
   );
