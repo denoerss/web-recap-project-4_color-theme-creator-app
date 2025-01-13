@@ -1,0 +1,10 @@
+.add-color {
+  border: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.input-fields {
+  border: none;
+  padding: 0;
+}
