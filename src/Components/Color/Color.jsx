@@ -5,17 +5,18 @@ import { useState } from "react";
 
 export default function Color({ color, onDelete }) {
   const [isConfirmed, setIsConfirmed] = useState(false);
-  console.log("color", color);
-  console.log("isConfirmed", isConfirmed);
 
   return (
     <div
       className="color-card"
       style={{ background: color.hex, color: color.contrastText }}
     >
+      {/* COLOR INPUT */}
       <h3 className="color-card-highlight">{color.hex}</h3>
       <h4>{color.role}</h4>
       <p>contrast: {color.contrastText}</p>
+
+      {/* DELETE BUTTON */}
       {isConfirmed ? (
         <section className="delete-button">
           <p className="color-card-highlight">Really delete?</p>
@@ -40,6 +41,14 @@ export default function Color({ color, onDelete }) {
           onClick={() => setIsConfirmed(true)}
         />
       )}
+
+      {/* EDIT BUTTON */}
+      <Button
+        type="button"
+        label="Edit"
+        className="edit-button"
+        onClick={() => {}}
+      />
     </div>
   );
 }
