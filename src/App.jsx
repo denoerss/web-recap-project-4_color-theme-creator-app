@@ -1,8 +1,8 @@
-import { initialColors } from "./lib/colors";
 import { useState } from "react";
+import { initialColors } from "./lib/colors";
 
-import Color from "./Components/Color/Color";
-import ColorForm from "./Components/ColorForm/ColorForm";
+import ColorForm from "./Components/ColorForm/ColorForm.jsx";
+import ColorCards from "./Components/ColorCards/ColorCards.jsx";
 
 import "./App.css";
 
@@ -13,15 +13,17 @@ function App() {
     setColors((prevColors) => [newColor, ...prevColors]);
   }
 
+  function handleDeleteColor(colorId) {
+    setColors((prevColors) =>
+      prevColors.filter((color) => color.id !== colorId)
+    );
+  }
+
   return (
     <>
       <h1>Theme Creator</h1>
-
       <ColorForm onAddColor={handleAddColor} />
-
-      {colors.map((color) => {
-        return <Color key={color.id} color={color} />;
-      })}
+      <ColorCards colors={colors} onDelete={handleDeleteColor} />
     </>
   );
 }

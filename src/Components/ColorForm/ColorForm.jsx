@@ -4,6 +4,7 @@ import { useState } from "react";
 import { uid } from "uid";
 
 import ColorInput from "../ColorInput/ColorInput.jsx";
+import Button from "../Button/Button.jsx";
 
 export default function ColorForm({
   onAddColor,
@@ -55,9 +56,12 @@ export default function ColorForm({
         />
 
         <div className="color-form__input">
-          <button type="submit" aria-label="Add Color">
-            Add Color
-          </button>
+          <Button
+            type="submit"
+            label="Add Color"
+            onclick={handleSubmit}
+            className="submit-button"
+          />
         </div>
       </fieldset>
     </form>

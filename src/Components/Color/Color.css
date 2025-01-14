@@ -3,9 +3,19 @@
   padding: 5px;
 }
 
-.color-card-headline {
+.color-card-highlight {
   display: inline;
-  padding: 2px 6px;
+  padding: 3px 6px;
+  margin-right: 6px;
   background: black;
   color: white;
+}
+
+.submit-button {
+  margin-top: 12px;
+}
+
+.cancel-button,
+.delete-button {
+  margin: 3px 6px 0 0;
 }
