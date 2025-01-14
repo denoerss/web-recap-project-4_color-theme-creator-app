@@ -27,6 +27,8 @@ export default function ColorForm({
     setColor(defaultValue);
   }
 
+  // function handleDelete(event) {}
+
   return (
     <form
       className="color-form"
