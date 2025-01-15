@@ -1,44 +1,100 @@
-import "./Color.css";
-import Button from "../Button/Button.jsx";
-
 import { useState } from "react";
 
-export default function Color({ color, onDelete }) {
+import "./Color.css";
+
+import Button from "../Button/Button.jsx";
+import ColorForm from "../ColorForm/ColorForm.jsx";
+
+export default function Color({ color, onDelete, onEdit }) {
   const [isConfirmed, setIsConfirmed] = useState(false);
-  console.log("color", color);
-  console.log("isConfirmed", isConfirmed);
+  const [isEditMode, setEditMode] = useState(false);
+  const [showCancelConfirmation, setShowCancelConfirmation] = useState(false);
+  const [editedColor, setEditedColor] = useState(color); // current editable color
+  const [initialColor] = useState(color); // save initial color for reset
+
+  // Reset to initial color and exit edit mode
+  function handleConfirmationCancel() {
+    setEditedColor(initialColor); // Reset to initial values
+    setEditMode(false); // Exit edit mode
+    setShowCancelConfirmation(false); // Hide cancel confirmation
+  }
 
   return (
     <div
       className="color-card"
       style={{ background: color.hex, color: color.contrastText }}
     >
-      <h3 className="color-card-highlight">{color.hex}</h3>
-      <h4>{color.role}</h4>
-      <p>contrast: {color.contrastText}</p>
-      {isConfirmed ? (
-        <section className="delete-button">
-          <p className="color-card-highlight">Really delete?</p>
-          <Button
-            type="button"
-            label="Cancel"
-            className="cancel-button"
-            onClick={() => setIsConfirmed(false)}
+      {isEditMode ? (
+        <>
+          <h3>Edit Color</h3>
+          <ColorForm
+            editColor={editedColor} // pass local edited color
+            onEdit={(editedColor) => {
+              setEditedColor(editedColor); // update card locally
+              onEdit(editedColor); // Update color globally
+              setEditMode(false); // Exit edit mode
+            }}
+            onCancel={() => setShowCancelConfirmation(true)} // show cancel confirmation
           />
-          <Button
-            type="button"
-            label="Delete"
-            className="delete-button"
-            onClick={() => onDelete(color.id)}
-          />
-        </section>
+          {showCancelConfirmation && (
+            <div className="cancel-confirmation">
+              <p className="color-card-highlight">Really cancel?</p>
+              <Button
+                type="button"
+                label="Yes"
+                className="confirm-cancel-button"
+                onClick={handleConfirmationCancel}
+              />
+              <Button
+                type="button"
+                label="No"
+                className="deny-cancel-button"
+                onClick={() => setShowCancelConfirmation(false)} // Dismiss confirmation
+              />
+            </div>
+          )}
+        </>
       ) : (
-        <Button
-          type="button"
-          label="Delete"
-          className="delete-button"
-          onClick={() => setIsConfirmed(true)}
-        />
+        <>
+          {/* COLOR DATA */}
+          <h3 className="color-card-highlight">{color.hex}</h3>
+          <h4>{color.role}</h4>
+          <p>contrast: {color.contrastText}</p>
+
+          {/* DELETE BUTTON */}
+          {isConfirmed ? (
+            <section className="delete-button">
+              <p className="color-card-highlight">Really delete?</p>
+              <Button
+                type="button"
+                label="Cancel"
+                className="cancel-button"
+                onClick={() => setIsConfirmed(false)}
+              />
+              <Button
+                type="button"
+                label="Delete"
+                className="delete-button"
+                onClick={() => onDelete(color.id)}
+              />
+            </section>
+          ) : (
+            <Button
+              type="button"
+              label="Delete"
+              className="delete-button"
+              onClick={() => setIsConfirmed(true)}
+            />
+          )}
+
+          {/* EDIT BUTTON */}
+          <Button
+            type="button"
+            label="Edit"
+            className="edit-button"
+            onClick={() => setEditMode(true)} // Enter edit mode
+          />
+        </>
       )}
     </div>
   );
