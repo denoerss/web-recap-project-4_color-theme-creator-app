@@ -12,11 +12,12 @@ export default function ColorForm({
   editColor = null,
   onCancel,
 }) {
-  const [color, setColor] = useState({
+  const defaultValues = {
     role: "some color",
     hex: "#123456",
     contrastText: "#FFFFFF",
-  });
+  };
+  const [color, setColor] = useState(defaultValues);
 
   // Pre-fill the form if editing
   useEffect(() => {
@@ -45,7 +46,7 @@ export default function ColorForm({
   }
 
   function resetForm() {
-    setColor({ role: "some color", hex: "#123456", contrastText: "#FFFFFF" });
+    setColor(defaultValues);
   }
 
   return (

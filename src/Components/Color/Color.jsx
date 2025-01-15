@@ -57,7 +57,16 @@ export default function Color({ color, onDelete, onEdit }) {
       ) : (
         <>
           {/* COLOR DATA */}
-          <h3 className="color-card-highlight">{color.hex}</h3>
+          <div className="color-hex">
+            <h3 className="color-card-highlight">{color.hex}</h3>
+            <Button
+              type="button"
+              label="Copy"
+              className="copy-button"
+              onClick={() => {}}
+            />
+          </div>
+
           <h4>{color.role}</h4>
           <p>contrast: {color.contrastText}</p>
 
