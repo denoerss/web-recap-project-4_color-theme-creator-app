@@ -1,13 +1,16 @@
-import { useState } from "react";
+// import { useState } from "react";
 import { initialColors } from "./lib/colors";
 
 import ColorForm from "./Components/ColorForm/ColorForm.jsx";
 import ColorCards from "./Components/ColorCards/ColorCards.jsx";
+import useLocalStorageState from "use-local-storage-state";
 
 import "./App.css";
 
 function App() {
-  const [colors, setColors] = useState(initialColors);
+  const [colors, setColors] = useLocalStorageState("Theme Colors", {
+    defaultValue: initialColors,
+  });
 
   function handleAddColor(newColor) {
     setColors((prevColors) => [newColor, ...prevColors]);
