@@ -40,7 +40,12 @@ export default function ColorForm({
       // Add a new color
       const newColor = { id: uid(), ...color };
       onAddColor(newColor);
+      resetForm();
     }
+  }
+
+  function resetForm() {
+    setColor({ role: "some color", hex: "#123456", contrastText: "#FFFFFF" });
   }
 
   return (
