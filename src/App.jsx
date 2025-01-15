@@ -19,11 +19,27 @@ function App() {
     );
   }
 
+  function handleEditColor(editedColor) {
+    setColors((prevColors) =>
+      prevColors.map((color) =>
+        color.id === editedColor.id ? editedColor : color
+      )
+    );
+  }
+
   return (
     <>
       <h1>Theme Creator</h1>
+
+      {/* Add ColorForm only adds colors */}
       <ColorForm onAddColor={handleAddColor} />
-      <ColorCards colors={colors} onDelete={handleDeleteColor} />
+
+      {/* ColorCard display and manages individual cards */}
+      <ColorCards
+        colors={colors}
+        onDelete={handleDeleteColor}
+        onEdit={handleEditColor}
+      />
     </>
   );
 }
